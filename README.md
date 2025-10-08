@@ -1,5 +1,6 @@
-===============================================================================================================
+
 **“Spec Engineering”**
+
     Comunicação com o Banco de Dados:
 > **Decisão:** Usar Prisma
 > **Alternativa:** Knex e TypeORM
