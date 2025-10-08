@@ -24,4 +24,3 @@
 > **Alternativa:** Manter o padrão legado do Node.js, CommonJS (CJS)
 > **Motivo:** práticas mais modernas e sustentáveis da engenharia de software
   **Contra** Algumas bibliotecas mais antigas ou que não recebem manutenção constante no ecossistema Node.js podem ter sido escritas exclusivamente para CommonJS
-===============================================================================================================
