@@ -7,3 +7,10 @@ export const ContactCreateSchemas = z.object({
   email: z.string().email("O email inserido e invalido."),
   phone: z.string().optional(),
 });
+
+export const ContactAtualizaSchemas = z.object({
+  //optional porque posso ou nao atualizar permitindo atualizacao parcial
+  name: z.string().min(3).optional(),
+  email: z.string().email().optional(),
+  phone: z.string().optional(),
+});
