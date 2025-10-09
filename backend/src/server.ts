@@ -14,8 +14,56 @@ app.use(express.json());
 
 //Listar todos os contatos
 app.get("/contacts", async (req, res) => {
-  const contacts = await prisma.contact.findMany();
-  res.json(contacts);
+  try {
+    const {
+      q,
+      page = 1,
+      pageSize = 10,
+
+      //valores e ordem padrao
+      sort = "createdAt",
+      order = "asc",
+    } = req.query;
+
+    const numeroPage = parseInt(page as string, 10);
+    const quantContactPagina = parseInt(pageSize as string, 10);
+
+    // Criação condicional do filtro
+    const whereClause = q
+      ? {
+          OR: [
+            { name: { contains: q as string, mode: "insensitive" } },
+            { email: { contains: q as string, mode: "insensitive" } }, // <- corrigido "contains"
+          ],
+        }
+      : {};
+
+    const ordemClausula = {
+      [sort as string]: order,
+    };
+
+    const [contacts, total] = await Promise.all([
+      prisma.contact.findMany({
+        where: whereClause,
+        orderBy: ordemClausula,
+        skip: (numeroPage - 1) * quantContactPagina, // <- ajustado
+        take: quantContactPagina,
+      }),
+      prisma.contact.count({
+        where: whereClause,
+      }),
+    ]);
+
+    res.json({
+      data: contacts,
+      page: numeroPage,
+      pageSize: quantContactPagina,
+      total: total,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensagem: "Erro interno do servidor" }); // <- corrigido "servido"
+  }
 });
 
 //Criar um novo contact
