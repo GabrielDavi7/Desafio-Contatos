@@ -22,7 +22,7 @@ function App() {
 
   const pageSize = 10;
 
-  // 🔁 Reaproveitável para recarregar dados da API
+  // dados da API #verificar
   const fetchContacts = async () => {
     setLoading(true);
     try {
@@ -38,7 +38,6 @@ function App() {
     }
   };
 
-  // 🧠 UseEffect com debounce
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       fetchContacts();
@@ -49,7 +48,6 @@ function App() {
     };
   }, [searchTerm, page, sortField, sortOrder]);
 
-  // 🔽 Função para alternar ordenação
   const handleSort = (field: string) => {
     if (field === sortField) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -59,14 +57,13 @@ function App() {
     }
   };
 
-  // ✅ Quando novo contato é criado
+  //#verificar
   const handleContactCreated = () => {
     setEditContact(null);
     setPage(1);
     fetchContacts();
   };
 
-  // ✅ Quando contato é editado
   const handleContactUpdated = (updatedContact: Contact | null) => {
     if (updatedContact) {
       setContacts((prev) =>
@@ -76,7 +73,7 @@ function App() {
     setEditContact(null);
   };
 
-  // 🗑️ Deletar contato
+  //Deletar contato
   const handleContactDelete = async (contactId: string) => {
     const confirm = window.confirm("Tem certeza que deseja excluir?");
     if (!confirm) return;
@@ -102,14 +99,12 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* --- LADO ESQUERDO: FORMULÁRIO --- */}
       <ContactForm
         onContactCreat={handleContactCreated}
         onContactUpdated={handleContactUpdated}
         editingContact={editContact}
       />
 
-      {/* --- LADO DIREITO: LISTA DE CONTATOS (CARDS) --- */}
       <div className="user-list">
         <h2>Usuários Cadastrados</h2>
 
