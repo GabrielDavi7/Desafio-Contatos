@@ -8,10 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
-
-
 //Criando o modelo de dados
 //Campos: `id`, `name`, `email`, `phone`, `createdAt`, `updatedAt`.
 
